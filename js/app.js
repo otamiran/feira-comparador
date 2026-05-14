@@ -2,7 +2,7 @@
    js/app.js — Inicialização da aplicação
    Versão multi-usuário com backend e autenticação.
 ════════════════════════════════════════════════════ */
-
+const API_BASE = 'https://feira-backend-production.up.railway.app/api';
 App.appInit = {};
 
 (async function initApp() {
