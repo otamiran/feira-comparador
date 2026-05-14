@@ -3,6 +3,17 @@
    Versão multi-usuário com backend e autenticação.
 ════════════════════════════════════════════════════ */
 const API_BASE = 'https://feira-backend-production.up.railway.app/api';
+App.appInit.loadPricesFromAPI();
+App.appInit.loadPricesFromAPI = async function () {
+  try {
+    const { prices } = await App.api.prices.getAll();
+    App.state.setPricesFromBackend(prices);
+    if (App.state.getKey('activeTab') === 'catalog') App.ui.catalog.render();
+    if (App.state.getKey('activeTab') === 'compare') App.ui.compare.render();
+  } catch (e) {
+    console.warn('[App] Backend indisponível, modo offline:', e.message);
+  }
+};
 App.appInit = {};
 
 (async function initApp() {
@@ -49,7 +60,7 @@ App.appInit = {};
     App.state.setActiveStores(App.storesData.list.map(s => s.id));
   }
 
-  App.appInit.loadPricesFromAPI();
+ 
   App.tabs.init();
 
   document.getElementById('btn-refresh-location')?.addEventListener('click', () => requestLocation(false));
@@ -67,16 +78,7 @@ App.appInit = {};
   console.info('[App] Comparador de Feira v2 iniciado.');
 })();
 
-App.appInit.loadPricesFromAPI = async function () {
-  try {
-    const { prices } = await App.api.prices.getAll();
-    App.state.setPricesFromBackend(prices);
-    if (App.state.getKey('activeTab') === 'catalog') App.ui.catalog.render();
-    if (App.state.getKey('activeTab') === 'compare') App.ui.compare.render();
-  } catch (e) {
-    console.warn('[App] Backend indisponível, modo offline:', e.message);
-  }
-};
+
 
 App.appInit.syncListFromAPI = async function () {
   if (!App.state.isLoggedIn()) return;
