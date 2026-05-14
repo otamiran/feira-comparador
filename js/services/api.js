@@ -12,7 +12,7 @@ App.api = (() => {
   // ── Configuração ───────────────────────────────────
   // Em desenvolvimento: 'http://localhost:3001'
   // Em produção: URL do seu backend (Railway, Render, etc.)
-  const BASE_URL = window.FEIRA_API_URL || 'http://localhost:3001';
+ const BASE_URL = 'https://feira-backend-production.up.railway.app';
 
   // ── Tokens em memória (mais seguro que localStorage para access token) ──
   let _accessToken  = null;
