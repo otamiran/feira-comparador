@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comparador de Feira</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Styles (ordem importa: variáveis → base → componentes → app) -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       SIDEBAR / NAVEGAÇÃO
+  ════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🛒</span>
+      <div class="brand-text">
+        <strong>Comparador</strong>
+        <small>de Feira</small>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-tab="catalog">
+        <span class="nav-icon">📦</span>
+        <span class="nav-label">Catálogo</span>
+      </button>
+      <button class="nav-item" data-tab="list">
+        <span class="nav-icon">📋</span>
+        <span class="nav-label">Minha Lista</span>
+        <span class="nav-badge" id="badge-list">0</span>
+      </button>
+      <button class="nav-item" data-tab="compare">
+        <span class="nav-icon">⚖️</span>
+        <span class="nav-label">Comparar</span>
+      </button>
+      <button class="nav-item" data-tab="stores">
+        <span class="nav-icon">🏪</span>
+        <span class="nav-label">Lojas</span>
+        <span class="nav-badge" id="badge-stores">0</span>
+      </button>
+      <button class="nav-item" data-tab="nf">
+        <span class="nav-icon">🧾</span>
+        <span class="nav-label">Nota Fiscal</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-location" id="location-display">
+      <span class="loc-icon">📍</span>
+      <div class="loc-info">
+        <span class="loc-name" id="loc-name">Detectando...</span>
+        <span class="loc-sub" id="loc-sub">localização</span>
+      </div>
+      <button class="loc-refresh" id="btn-refresh-location" title="Atualizar localização">↻</button>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════
+       CONTEÚDO PRINCIPAL
+  ════════════════════════════════════════ -->
+  <main class="main-content">
+
+    <!-- Mobile header -->
+    <header class="mobile-header">
+      <button class="mobile-menu-btn" id="btn-mobile-menu">☰</button>
+      <span class="mobile-title">Comparador de Feira</span>
+      <span class="mobile-badge" id="mobile-badge">0</span>
+    </header>
+
+    <!-- Toast container -->
+    <div id="toast-container"></div>
+
+    <!-- ── TAB: CATÁLOGO ── -->
+    <section class="tab-panel active" id="tab-catalog">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Catálogo de Produtos</h1>
+          <p class="panel-subtitle">Selecione os itens e ajuste as quantidades para comparar preços</p>
+        </div>
+        <div class="panel-actions">
+          <input type="search" class="search-input" id="catalog-search" placeholder="Buscar produto..." />
+        </div>
+      </div>
+
+      <div class="category-filters" id="category-filters"></div>
+      <div class="catalog-grid" id="catalog-grid"></div>
+    </section>
+
+    <!-- ── TAB: LISTA ── -->
+    <section class="tab-panel" id="tab-list">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Minha Lista de Compras</h1>
+          <p class="panel-subtitle" id="list-subtitle">Ajuste as quantidades dos itens selecionados</p>
+        </div>
+        <div class="panel-actions">
+          <button class="btn btn-outline btn-sm" id="btn-clear-list">Limpar lista</button>
+          <button class="btn btn-primary btn-sm" id="btn-go-compare">Ver comparação →</button>
+        </div>
+      </div>
+      <div id="list-content"></div>
+    </section>
+
+    <!-- ── TAB: COMPARAR ── -->
+    <section class="tab-panel" id="tab-compare">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Comparação de Preços</h1>
+          <p class="panel-subtitle">Valores atualizados via notas fiscais dos usuários</p>
+        </div>
+        <div class="panel-actions">
+          <select class="select-input" id="sort-select">
+            <option value="total">Ordenar: Menor total</option>
+            <option value="name">Ordenar: Nome A-Z</option>
+            <option value="dist">Ordenar: Mais próxima</option>
+          </select>
+        </div>
+      </div>
+      <div id="compare-content"></div>
+    </section>
+
+    <!-- ── TAB: LOJAS ── -->
+    <section class="tab-panel" id="tab-stores">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Estabelecimentos Próximos</h1>
+          <p class="panel-subtitle">Lojas encontradas com base na sua localização</p>
+        </div>
+        <div class="panel-actions">
+          <input type="number" class="input-sm" id="radius-input" value="5" min="1" max="50" />
+          <label class="input-label">km de raio</label>
+        </div>
+      </div>
+      <div id="stores-content"></div>
+    </section>
+
+    <!-- ── TAB: NOTA FISCAL ── -->
+    <section class="tab-panel" id="tab-nf">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title">Atualizar Preços via Nota Fiscal</h1>
+          <p class="panel-subtitle">A IA extrai automaticamente produtos e preços da sua nota</p>
+        </div>
+      </div>
+      <div id="nf-content"></div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════
+       SCRIPTS (ordem: dados → estado → serviços → ui → app)
+  ════════════════════════════════════════ -->
+  <!-- Namespace global -->
+  <script>window.App = {};
+  window.FEIRA_API_URL = "feira-backend-production.up.railway.app"; // ← altere para sua URL de produção</script>
+
+  <!-- Dados estáticos -->
+  <script src="js/data/catalog.js"></script>
+  <script src="js/data/stores.js"></script>
+
+  <!-- Estado da aplicação -->
+  <script src="js/state.js"></script>
+
+  <!-- Serviços -->
+  <script src="js/services/storage.js"></script>
+  <script src="js/services/api.js"></script>
+  <script src="js/services/location.js"></script>
+  <script src="js/services/compare.js"></script>
+  <script src="js/services/nf.js"></script>
+
+  <!-- UI -->
+  <script src="js/ui/toast.js"></script>
+  <script src="js/ui/auth.js"></script>
+  <script src="js/ui/history.js"></script>
+  <script src="js/ui/tabs.js"></script>
+  <script src="js/ui/catalog.js"></script>
+  <script src="js/ui/list.js"></script>
+  <script src="js/ui/compare.js"></script>
+  <script src="js/ui/stores.js"></script>
+  <script src="js/ui/nf.js"></script>
+
+  <!-- Inicialização -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>
