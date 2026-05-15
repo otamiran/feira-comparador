@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Parceria Comparador de Feira</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#0a3d1f;
+  --green-mid:#1a6b38;
+  --green-light:#2d9956;
+  --green-pale:#e8f5ed;
+  --amber:#c17d11;
+  --amber-pale:#fef9ec;
+  --ink:#0f1c14;
+  --muted:#5a6b5e;
+  --border:#dde8e1;
+  --bg:#f5f9f6;
+  --white:#ffffff;
+  --serif:'DM Serif Display',Georgia,serif;
+  --sans:'DM Sans',-apple-system,sans-serif;
+  --mono:'DM Mono',monospace;
+}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.6}
+
+/* ── PAGE WRAPPER ── */
+.page{max-width:860px;margin:0 auto;padding:24px 16px 60px}
+
+/* ── HERO ── */
+.hero{
+  background:var(--green);
+  border-radius:20px;
+  padding:56px 48px 48px;
+  position:relative;
+  overflow:hidden;
+  margin-bottom:32px;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 90% 10%, rgba(45,153,86,.25) 0%, transparent 70%),
+             radial-gradient(ellipse 40% 60% at 10% 90%, rgba(26,107,56,.3) 0%, transparent 60%);
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);
+  color:rgba(255,255,255,.9);
+  font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 14px;border-radius:100px;margin-bottom:24px;
+  position:relative;
+}
+.hero-logo{
+  display:flex;align-items:center;gap:12px;margin-bottom:20px;position:relative;
+}
+.hero-logo-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:var(--green-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+}
+.hero-logo-name{
+  color:white;font-family:var(--serif);font-size:28px;line-height:1.1;
+}
+.hero-logo-name span{color:rgba(255,255,255,.6);font-size:14px;font-family:var(--sans);font-weight:400;display:block;margin-top:2px}
+.hero-headline{
+  font-family:var(--serif);font-size:42px;line-height:1.18;
+  color:white;position:relative;margin-bottom:20px;
+  max-width:540px;
+}
+.hero-headline em{color:#7bdd9f;font-style:italic}
+.hero-sub{
+  color:rgba(255,255,255,.75);font-size:16px;max-width:480px;
+  line-height:1.7;position:relative;margin-bottom:36px;
+}
+.hero-cta-row{display:flex;gap:12px;flex-wrap:wrap;position:relative}
+.btn-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;border-radius:100px;
+  font-size:14px;font-weight:600;cursor:pointer;
+  text-decoration:none;border:none;transition:all .2s;
+}
+.btn-primary{background:white;color:var(--green)}
+.btn-primary:hover{background:#e8f5ed}
+.btn-ghost{background:rgba(255,255,255,.12);color:white;border:1px solid rgba(255,255,255,.25)}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+
+/* ── STATS ROW ── */
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px;
+}
+.stat-card{
+  background:white;border:1px solid var(--border);border-radius:16px;
+  padding:22px 20px;text-align:center;
+}
+.stat-num{
+  font-family:var(--serif);font-size:36px;color:var(--green);
+  margin-bottom:4px;line-height:1;
+}
+.stat-label{font-size:13px;color:var(--muted);line-height:1.4}
+
+/* ── SECTION ── */
+.section{margin-bottom:36px}
+.section-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--green-light);margin-bottom:10px;
+}
+.section-title{
+  font-family:var(--serif);font-size:28px;color:var(--ink);
+  margin-bottom:6px;line-height:1.25;
+}
+.section-sub{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:24px}
+
+/* ── BENEFITS GRID ── */
+.benefits-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.benefit-card{
+  background:white;border:1px solid var(--border);border-radius:16px;
+  padding:24px 22px;
+}
+.benefit-icon{
+  width:44px;height:44px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:14px;
+}
+.benefit-title{font-size:15px;font-weight:600;margin-bottom:6px;color:var(--ink)}
+.benefit-desc{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ── HOW IT WORKS ── */
+.steps-list{display:flex;flex-direction:column;gap:0}
+.step-row{
+  display:flex;gap:20px;align-items:flex-start;
+  padding:20px 0;border-bottom:1px solid var(--border);
+}
+.step-row:last-child{border-bottom:none}
+.step-num-badge{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:var(--green);color:white;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:600;margin-top:2px;
+}
+.step-content-title{font-size:15px;font-weight:600;margin-bottom:4px}
+.step-content-desc{font-size:13px;color:var(--muted);line-height:1.6}
+.step-tag{
+  display:inline-block;font-size:10px;font-weight:600;
+  padding:2px 8px;border-radius:100px;margin-top:6px;
+  letter-spacing:.04em;text-transform:uppercase;
+}
+
+/* ── COMPARISON TABLE ── */
+.compare-section{
+  background:white;border:1px solid var(--border);border-radius:16px;
+  overflow:hidden;margin-bottom:32px;
+}
+.compare-header{
+  background:var(--green);color:white;
+  padding:18px 24px;
+  font-size:15px;font-weight:600;
+}
+.compare-table{width:100%;border-collapse:collapse;font-size:13px}
+.compare-table th{
+  padding:10px 20px;text-align:left;
+  background:var(--green-pale);color:var(--green);
+  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+}
+.compare-table td{
+  padding:12px 20px;border-bottom:1px solid var(--border);
+  vertical-align:middle;
+}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table tr:hover td{background:var(--bg)}
+.dot-yes{color:#1a6b38;font-weight:700;font-size:16px}
+.dot-no{color:#ccc;font-size:16px}
+
+/* ── TESTIMONIAL / QUOTE ── */
+.quote-box{
+  background:var(--amber-pale);border:1px solid #f0d88a;
+  border-radius:16px;padding:28px 30px;margin-bottom:32px;
+  position:relative;
+}
+.quote-text{
+  font-family:var(--serif);font-size:20px;color:var(--ink);
+  line-height:1.5;margin-bottom:16px;
+}
+.quote-author{font-size:13px;color:var(--muted)}
+.quote-author strong{color:var(--ink)}
+
+/* ── FORM CARD ── */
+.form-card{
+  background:white;border:2px solid var(--green);
+  border-radius:20px;padding:36px;margin-bottom:32px;
+}
+.form-card-title{
+  font-family:var(--serif);font-size:26px;margin-bottom:6px;
+}
+.form-card-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.form-row.single{grid-template-columns:1fr}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.form-input,.form-select,.form-textarea{
+  padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;
+  font-size:14px;font-family:var(--sans);color:var(--ink);
+  background:var(--bg);outline:none;transition:border-color .15s;
+  width:100%;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  border-color:var(--green-light);background:white;
+}
+.form-textarea{min-height:90px;resize:vertical}
+.form-submit{
+  width:100%;padding:15px;margin-top:8px;
+  background:var(--green);color:white;
+  border:none;border-radius:100px;
+  font-size:15px;font-weight:600;font-family:var(--sans);
+  cursor:pointer;transition:background .2s;
+}
+.form-submit:hover{background:var(--green-mid)}
+.form-note{text-align:center;font-size:12px;color:var(--muted);margin-top:12px}
+
+/* ── FOOTER ── */
+.footer{
+  text-align:center;color:var(--muted);font-size:13px;
+  padding-top:32px;border-top:1px solid var(--border);
+  line-height:1.8;
+}
+.footer a{color:var(--green-light);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+/* ── PRINT ── */
+@media print{
+  body{background:white}
+  .page{max-width:100%;padding:0}
+  .hero{border-radius:0}
+  .btn-cta,.form-card,.form-submit{display:none}
+  .hero-cta-row{display:none}
+}
+
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .hero{padding:36px 24px}
+  .hero-headline{font-size:30px}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .benefits-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero-tag,.hero-logo,.hero-headline,.hero-sub,.hero-cta-row{animation:fadeUp .5s ease both}
+.hero-logo{animation-delay:.05s}.hero-headline{animation-delay:.1s}
+.hero-sub{animation-delay:.15s}.hero-cta-row{animation-delay:.2s}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-tag">🤝 Programa de Parceiros</div>
+  <div class="hero-logo">
+    <div class="hero-logo-icon">🛒</div>
+    <div class="hero-logo-name">
+      Comparador de Feira
+      <span>Transparência de preços para todos</span>
+    </div>
+  </div>
+  <h1 class="hero-headline">
+    Seja encontrado por quem já<br>
+    <em>decide onde comprar</em><br>
+    antes de sair de casa.
+  </h1>
+  <p class="hero-sub">
+    O Comparador de Feira conecta consumidores da região com os melhores preços do dia.
+    Parceiros que compartilham suas notas fiscais aparecem em destaque — com preços
+    100% atualizados, gerando mais visitas e mais vendas.
+  </p>
+  <div class="hero-cta-row">
+    <a href="#form-parceria" class="btn-cta btn-primary">🚀 Quero ser parceiro</a>
+    <a href="#como-funciona" class="btn-cta btn-ghost">Ver como funciona</a>
+  </div>
+</div>
+
+<!-- ── STATS ── -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-num">2.400+</div>
+    <div class="stat-label">consultas<br>por mês na região</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">68%</div>
+    <div class="stat-label">dos usuários decidem<br>a loja pelo app</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">gratuito para o<br>estabelecimento</div>
+  </div>
+</div>
+
+<!-- ── BENEFÍCIOS ── -->
+<div class="section">
+  <div class="section-eyebrow">Por que participar</div>
+  <h2 class="section-title">Vantagens diretas para o seu negócio</h2>
+  <p class="section-sub">Parceiros recebem visibilidade e acesso a dados que ajudam a entender o mercado local.</p>
+
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-icon" style="background:#e8f5ed">📍</div>
+      <div class="benefit-title">Destaque no mapa de lojas</div>
+      <div class="benefit-desc">
+        Seu estabelecimento aparece em primeiro lugar nos resultados para usuários próximos,
+        com a tag <strong>"Parceiro Verificado"</strong> e preços sempre atualizados.
+      </div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon" style="background:#fef9ec">📊</div>
+      <div class="benefit-title">Relatório de competitividade</div>
+      <div class="benefit-desc">
+        Acesso mensal a um relatório mostrando como seus preços se comparam aos concorrentes
+        na região — informação valiosa para suas decisões comerciais.
+      </div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon" style="background:#eff6ff">🔁</div>
+      <div class="benefit-title">Zero trabalho extra</div>
+      <div class="benefit-desc">
+        Integração automática via XML das NFC-e que você já emite. Nenhum sistema novo
+        para aprender, nenhuma digitação. Funciona em segundo plano.
+      </div>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon" style="background:#f5f3ff">🏆</div>
+      <div class="benefit-title">Reputação de transparência</div>
+      <div class="benefit-desc">
+        Consumidores confiam mais em estabelecimentos com preços verificados.
+        O badge de parceiro comunica honestidade e modernidade.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── QUOTE ── -->
+<div class="quote-box">
+  <div class="quote-text">
+    "Depois que começamos a compartilhar os XMLs, o número de clientes novos
+    que mencionavam ter visto nossos preços no app aumentou visivelmente.
+    É como ter um cartaz na frente de casa — sem custo nenhum."
+  </div>
+  <div class="quote-author">
+    <strong>João Silva</strong> — Gerente, Mercadinho Central, Santa Rita PB
+    <br><em>* Depoimento ilustrativo de parceiro piloto</em>
+  </div>
+</div>
+
+<!-- ── COMO FUNCIONA ── -->
+<div class="section" id="como-funciona">
+  <div class="section-eyebrow">Integração simples</div>
+  <h2 class="section-title">Como funciona a parceria</h2>
+  <p class="section-sub">Três passos e seus preços atualizam automaticamente para milhares de consumidores.</p>
+
+  <div class="steps-list">
+    <div class="step-row">
+      <div class="step-num-badge">1</div>
+      <div>
+        <div class="step-content-title">Você preenche o formulário abaixo</div>
+        <div class="step-content-desc">
+          Nossa equipe recebe seu cadastro e entra em contato em até 2 dias úteis
+          para confirmar os detalhes e ativar a parceria.
+        </div>
+        <span class="step-tag" style="background:#e8f5ed;color:#0a3d1f">⏱ 2 min</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num-badge">2</div>
+      <div>
+        <div class="step-content-title">Recebe uma URL de webhook exclusiva</div>
+        <div class="step-content-desc">
+          É um endereço único para o seu estabelecimento. Seu sistema de PDV (ou emissor de NFC-e)
+          envia os XMLs automaticamente para esse endereço cada vez que emite uma nota.
+          Se precisar de ajuda para configurar, nossa equipe te acompanha.
+        </div>
+        <span class="step-tag" style="background:#eff6ff;color:#084298">🔧 Técnico — nossa equipe ajuda</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num-badge">3</div>
+      <div>
+        <div class="step-content-title">Preços atualizados automaticamente</div>
+        <div class="step-content-desc">
+          A cada NFC-e emitida, os preços dos produtos são atualizados no Comparador
+          em tempo real. Seus clientes sempre veem o preço real do dia.
+          Você acompanha tudo no painel do parceiro.
+        </div>
+        <span class="step-tag" style="background:#e8f5ed;color:#0a3d1f">✅ Automático</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TABELA COMPARATIVA ── -->
+<div class="compare-section">
+  <div class="compare-header">Parceiro vs. não-parceiro no Comparador</div>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Recurso</th>
+        <th>Não-parceiro</th>
+        <th>Parceiro ativo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Aparece nas buscas de usuários</td>
+        <td><span class="dot-yes">✓</span> Sim</td>
+        <td><span class="dot-yes">✓</span> <strong>Em destaque</strong></td>
+      </tr>
+      <tr>
+        <td>Preços atualizados</td>
+        <td><span class="dot-no">○</span> Só por NF de usuários</td>
+        <td><span class="dot-yes">✓</span> <strong>Automático, em tempo real</strong></td>
+      </tr>
+      <tr>
+        <td>Confiança do preço</td>
+        <td><span class="dot-no">○</span> Baixa (estimativa)</td>
+        <td><span class="dot-yes">✓</span> <strong>Alta (XML oficial SEFAZ)</strong></td>
+      </tr>
+      <tr>
+        <td>Badge "Verificado"</td>
+        <td><span class="dot-no">○</span> Não</td>
+        <td><span class="dot-yes">✓</span> <strong>Sim</strong></td>
+      </tr>
+      <tr>
+        <td>Relatório de mercado</td>
+        <td><span class="dot-no">○</span> Não</td>
+        <td><span class="dot-yes">✓</span> <strong>Mensal, gratuito</strong></td>
+      </tr>
+      <tr>
+        <td>Custo</td>
+        <td>R$ 0</td>
+        <td><strong>R$ 0 — gratuito</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ── FORMULÁRIO ── -->
+<div class="form-card" id="form-parceria">
+  <h2 class="form-card-title">Quero ser parceiro 🤝</h2>
+  <p class="form-card-sub">Preencha abaixo. Nossa equipe entra em contato em até 2 dias úteis.</p>
+
+  <div id="form-success" style="display:none;text-align:center;padding:32px 0">
+    <div style="font-size:48px;margin-bottom:12px">🎉</div>
+    <div style="font-size:20px;font-weight:600;margin-bottom:8px">Solicitação enviada!</div>
+    <div style="color:var(--muted);font-size:14px">Entraremos em contato no e-mail informado em até 2 dias úteis.</div>
+  </div>
+
+  <form id="partner-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Nome do estabelecimento *</label>
+        <input class="form-input" type="text" name="business_name" placeholder="Ex: Supermercado Bom Preço" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">CNPJ *</label>
+        <input class="form-input" type="text" name="cnpj" placeholder="00.000.000/0001-00" required/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Nome do responsável</label>
+        <input class="form-input" type="text" name="contact_name" placeholder="Seu nome"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mail de contato *</label>
+        <input class="form-input" type="email" name="contact_email" placeholder="contato@suaempresa.com.br" required/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Telefone / WhatsApp</label>
+        <input class="form-input" type="tel" name="contact_phone" placeholder="(83) 9 9999-9999"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Cidade</label>
+        <input class="form-input" type="text" name="city" placeholder="Santa Rita"/>
+      </div>
+    </div>
+    <div class="form-row single">
+      <div class="form-group">
+        <label class="form-label">Software emissor de NFC-e (opcional)</label>
+        <input class="form-input" type="text" name="nfe_software" placeholder="Ex: SAT Fiscal, Totvs, sistema próprio..."/>
+      </div>
+    </div>
+    <div class="form-row single">
+      <div class="form-group">
+        <label class="form-label">Alguma dúvida ou mensagem?</label>
+        <textarea class="form-textarea" name="message" placeholder="Escreva aqui suas dúvidas ou observações..."></textarea>
+      </div>
+    </div>
+
+    <div id="form-error" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:10px;padding:12px 16px;font-size:13px;color:#991b1b;margin-bottom:12px"></div>
+
+    <button type="submit" class="form-submit" id="submit-btn">
+      Enviar solicitação de parceria →
+    </button>
+    <p class="form-note">🔒 Seus dados são usados apenas para contato. Nenhuma informação é compartilhada.</p>
+  </form>
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <strong>Comparador de Feira</strong> — Santa Rita, Paraíba<br>
+  Dúvidas? <a href="mailto:parcerias@comparadordafeira.com.br">parcerias@comparadordafeira.com.br</a>
+  · <a href="tel:+5583999999999">WhatsApp (83) 9 9999-9999</a><br><br>
+  <small>© 2025 Comparador de Feira · Todos os direitos reservados</small>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// ── Máscara CNPJ ─────────────────────────────────
+document.querySelector('[name="cnpj"]').addEventListener('input', function() {
+  let v = this.value.replace(/\D/g,'').slice(0,14);
+  if(v.length>12) v=v.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,'$1.$2.$3/$4-$5');
+  else if(v.length>8) v=v.replace(/(\d{2})(\d{3})(\d{3})(\d+)/,'$1.$2.$3/$4');
+  else if(v.length>5) v=v.replace(/(\d{2})(\d{3})(\d+)/,'$1.$2.$3');
+  else if(v.length>2) v=v.replace(/(\d{2})(\d+)/,'$1.$2');
+  this.value=v;
+});
+
+// ── Submissão do formulário ───────────────────────
+document.getElementById('partner-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  const errEl = document.getElementById('form-error');
+  errEl.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const data = Object.fromEntries(new FormData(this));
+
+  try {
+    // URL da API — substitua pela URL do seu Railway
+    const API = window.FEIRA_API_URL || 'http://localhost:3001';
+    const res  = await fetch(`${API}/api/partners/apply`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(data),
+    });
+    const json = await res.json();
+
+    if (!res.ok) throw new Error(json.error || 'Erro ao enviar');
+
+    this.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+
+  } catch(err) {
+    errEl.textContent = err.message;
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Enviar solicitação de parceria →';
+  }
+});
+
+// ── Smooth scroll ─────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const el = document.querySelector(a.getAttribute('href'));
+    if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+});
+</script>
+</body>
+</html>
